@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Airline Reservation System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(35, 33, 33, 0.618);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            border-radius: 5px;
+            width: fit-content;
+            height: 100%;
+        }
+        .form-group label {
+            font-weight: 500;
+            color: aliceblue;
+        }
+
+        .nn1{
+            background: linear-gradient(to top,rgba(0,0,0,0.2)50%,rgba(0,0,0,0.2)50%),url("./bn.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            height: fit-content;
+            height: 100%;
+        }
+        @media screen and (max-width: 1200px) {
+    
+     .container {
+       width: 70%;
+     }
+     input{
+        width: 70%;
+     }
+   }
+   
+   /* On screens that are 950px or less, set the width to 75% */
+   @media screen and (max-width: 950px) {
+    
+     .container {
+       width: 75%;
+     }
+     input{
+        width: 75%;
+     }
+   }
+   
+   /* On screens that are 600px or less, set the width to 90% */
+   @media screen and (max-width: 600px) {
+    
+     .container {
+       width: 90%;
+     }
+     input{
+        width: 90%;
+     }
+   }
+    </style>
+</head>
+<body>
+    <div class="nn1">
+    <div class="container">
+        <center><h2 style="color:aqua">Airline Reservation System</h2></center>
+        <form name="f1" action="http://localhost:6211" method="post" onsubmit="return validateForm()">
+            <h3 style="color: azure; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Booking Details</h3>
+            <div class="form-group">
+                <label for="from">From:</label>
+                <select class="form-control" name="from">
+                    <option>Choose Your Departure Airport</option>
+                    <option>Chennai</option>
+                    <option>Qatar</option>
+                    <option>Singapore</option>
+                    <option>Malaysia</option>
+                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="to">To:</label>
+                <select class="form-control" name="to">
+                    <option>Choose Your Destination Airport</option>
+                    <option>Qatar</option>
+                    <option>Chennai</option>
+                    <option>Singapore</option>
+                    <option>Malaysia</option>
+                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="class">Class:</label>
+                <select class="form-control" id="class" name="class">
+                    <option>Select Your Class Of Travel</option>
+                    <option>Economy Class</option>
+                    <option>Business Class</option>
+                    <option>First Class</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="adults">No. of Adults:</label>
+                <input type="number" class="form-control" id="adults" name="adults" min="1" max="10" >
+            </div>
+            <div class="form-group">
+                <label for="children">No. of Children:</label>
+                <input type="number" class="form-control" id="children" name="children" min="0" max="10">
+            </div>
+            <div class="form-group">
+                <label for="infants">No. of Infants (below 2 years):</label>
+                <input type="number" class="form-control" id="infants" name="infants" min="0" max="10">
+            </div>
+            <div class="form-group">
+                <label for="ntick">Total Number of Tickets:</label>
+                <input type="number" class="form-control" min="1" max="30" name="ntickk" id="ntickk">
+            </div>
+            <div class="form-group">
+                <label for="trip-type">Trip Type:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="trip-type" id="one-way" value="one-way" checked>
+                    <label class="form-check-label" for="one-way">
+                        One Way
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="trip-type" id="round-trip" value="round-trip">
+                    <label class="form-check-label" for="round-trip">
+                        Round Trip
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="ddate">Departure Date:</label>
+                <input type="date" class="form-control" placeholder="Departure Date" name="ddatee" id="ddatee">
+            </div>
+            <div class="form-group">
+                <label for="dtime">Departure Time:</label>
+                <input type="time" class="form-control" name="dtimee" id="dtimee">
+            </div>
+            <input type="submit" value="Calculate Amount" onclick="return validateForm()" class="btn btn-primary">
+            <button type="reset" class="btn btn-secondary">Reset</button></form>
+            <br>
+            <h2 style="color: aqua;" id="yui"></h2> 
+<h3 style="color: aliceblue;" ></h3></div></div>
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </body>
+   <script>
+    function validateForm() {
+        // Get values from form inputs
+        var from = document.forms["f1"]["from"].value;
+        var to = document.forms["f1"]["to"].value;
+        var classOfTravel = document.forms["f1"]["class"].value;
+        var noOfAdults = document.forms["f1"]["adults"].value;
+        var noOfChildren = document.forms["f1"]["children"].value;
+        var noOfInfants = document.forms["f1"]["infants"].value;
+        var noOfTickets = document.forms["f1"]["ntickk"].value;
+        var tripType = document.forms["f1"]["trip-type"].value;
+        var departureDate = document.forms["f1"]["ddatee"].value;
+        var departureTime = document.forms["f1"]["dtimee"].value;
+
+        // Validate form inputs
+        if (from == "Choose Your Departure Airport") {
+            alert("Please select a departure airport.");
+            return false;
+        }
+        if (to == "Choose Your Destination Airport") {
+            alert("Please select a destination airport.");
+            return false;
+        }
+        if (classOfTravel == "Select Your Class Of Travel") {
+            alert("Please select a class of travel.");
+            return false;
+        }
+        if (noOfAdults < 1) {
+            alert("Please enter at least 1 adult.");
+            return false;
+        }
+        if (noOfChildren < 0) {
+            alert("Please enter a non-negative number of children.");
+            return false;
+        }
+        if (noOfInfants < 0) {
+            alert("Please enter a non-negative number of infants.");
+            return false;
+        }
+        if (noOfTickets < 1) {
+            alert("Please enter at least 1 ticket.");
+            return false;
+        }
+        if (tripType == "round-trip" && departureDate == "") {
+            alert("Please select a departure date for your round trip.");
+            return false;
+        }
+        if (departureTime == "") {
+            alert("Please select a departure time.");
+            return false;
+        }
+        // alert("Ticket Amount Calculated");
+        // Form is valid
+        return calculateAmount();
+    }
+    function calculateAmount() {
+            // Fetching values from form inputs
+            var from = document.f1.from.value;
+            var to = document.f1.to.value;
+            var classSelected = document.f1.class.value;
+            var adults = document.f1.adults.value;
+            var children = document.f1.children.value;
+            var infants = document.f1.infants.value;
+            var tripType = document.f1.elements['trip-type'].value;
+            var ntickk = document.f1.ntickk.value;
+    
+            // Calculating base fare
+            var baseFare = 0;
+            if (from === 'Chennai' && to === 'Qatar') {
+                baseFare = 500;
+            } else if (from === 'Chennai' && to === 'Singapore') {
+                baseFare = 600;
+            } else if (from === 'Chennai' && to === 'Malaysia') {
+                baseFare = 700;
+            } else if (from === 'Qatar' && to === 'Chennai') {
+                baseFare = 400;
+            } else if (from === 'Qatar' && to === 'Singapore') {
+                baseFare = 800;
+            } else if (from === 'Qatar' && to === 'Malaysia') {
+                baseFare = 900;
+            } else if (from === 'Singapore' && to === 'Chennai') {
+                baseFare = 550;
+            } else if (from === 'Singapore' && to === 'Qatar') {
+                baseFare = 750;
+            } else if (from === 'Singapore' && to === 'Malaysia') {
+                baseFare = 350;
+            } else if (from === 'Malaysia' && to === 'Chennai') {
+                baseFare = 450;
+            } else if (from === 'Malaysia' && to === 'Qatar') {
+                baseFare = 650;
+            } else if (from === 'Malaysia' && to === 'Singapore') {
+                baseFare = 400;
+            }
+    
+            // Adding fare based on class
+            var classFare = 0;
+            if (classSelected === 'Economy Class') {
+                classFare = baseFare * 0.6;
+            } else if (classSelected === 'Business Class') {
+                classFare = baseFare * 1.4;
+            } else if (classSelected === 'First Class') {
+                classFare = baseFare * 2;
+            }
+    
+            // Adding fare based on number of passengers
+            var totalFare = 0;
+            totalFare += (adults * classFare);
+            totalFare += (children * classFare * 0.5);
+            totalFare += (infants * 1000);
+    
+            // Adding fare based on trip type
+            if (tripType === 'round-trip') {
+                totalFare = totalFare * 1.8;
+            }
+    
+            // Adding fare based on total number of tickets
+            if (ntickk > 5) {
+                totalFare = totalFare * 0.9;
+            }
+    
+            // Displaying the final amount
+            alert("Your total fare is: $" + totalFare.toFixed(2));
+    document.getElementById("yui").innerHTML=" Your TotalFare is : "+totalFare.toFixed(2)
+            // Preventing the form from submitting
+            return true;
+        }
+</script>
+</html>
